@@ -3,6 +3,8 @@ import { Readable, Writable } from 'stream';
 export class Client {
   constructor (connectionString: string, clientId?: string, options?: ZKOptions, noBatchOptions?: AckBatchOptions, sslOptions?: any);
 
+  prepareClose(requestTimeout?: number): void;
+
   close (cb?: () => void): void;
 
   topicExists (topics: string[], cb: (error?: TopicsNotExistError | any) => any): void;
@@ -78,6 +80,8 @@ export class ConsumerGroupStream extends Readable {
 
   transmitMessages(): void;
 
+  prepareClose(requestTimeout?: number): void;
+
   close (cb: () => any): void;
 }
 
@@ -115,6 +119,8 @@ export class ConsumerGroup extends HighLevelConsumer {
   client: KafkaClient & Client;
 
   constructor (options: ConsumerGroupOptions, topics: string[] | string);
+
+  prepareClose(requestTimeout?: number): void;
 
   close (force: boolean, cb: (error: Error) => any): void;
   close (cb: (error: Error) => any): void;
